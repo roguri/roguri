@@ -1,0 +1,79 @@
+<html><head>
+        <meta name="viewport" content="width=device-width">
+        <style type="text/css">
+        </style>
+    <script>
+var audio = new Audio();
+audio.src = "etc/pi.wav";
+var dict = {
+	"a":"8",
+	"b":"A#",
+	"c":"B",
+	"d":"C",
+	"e":"16",
+	"f":"C#",
+	"g":"D",
+	"h":"D#",
+	"i":"1",
+	"j":"E",
+	"k":"F",
+	"l":"F#",
+	"m":"G",
+	"n":"G#",
+	"o":"2",
+	"p":"A",
+	"q":"A#",
+	"r":"B",
+	"s":"C",
+	"t":"C#",
+	"u":"4",
+	"v":"D",
+	"w":"D#",
+	"x":"E",
+	"y":"F",
+	"z":"F#"
+}
+function morse(){
+	var morse_str=conv(document.getElementById("inp").value)
+	play_sound(morse_str)
+}
+function conv(word_str){
+	var strs = word_str.toLowerCase().split('');
+	var rtn ="";
+	for(var i =0;i<=strs.length-1;i++){
+		if(dict[strs[i]]===undefined){
+		}else{
+			rtn+=dict[strs[i]]+"";
+		}
+	}
+	return rtn;
+}
+function play_sound(morse){
+	var mstrs=morse.split('');
+	var mesEle=document.getElementById("mes");
+	mesEle.value="";
+	var timer=setInterval(function(){
+			audio.currentTime = 0;
+			if(mstrs.length<=0){
+				audio.pause();
+				clearInterval(timer);
+				return;
+			}
+			var onoff=mstrs.shift();
+			if(onoff=="0"){
+				audio.pause();
+			}else{
+				audio.play();
+			}
+			mesEle.value=mesEle.value+onoff;
+	},100)
+}
+    </script>
+  </head>
+<body onload="" data-gr-c-s-loaded="true">
+<h1>desert music</h1>
+poem:<input type="text" id="inp" value="SOS" size="35"><input type="button" value="convert" onclick="morse()"><br>
+↓<br>
+<textarea id="mes" rows="4" cols="40" wrap="soft"></textarea>
+
+</body></html>
